@@ -10,8 +10,14 @@
         "@nexi/tsconfig": "workspace:*"
     },
     "dependencies": {
+        "@prisma/adapter-pg": "^7.3.0",
+        "@prisma/client": "^7.3.0",
         "@types/node": "^25.2.0",
+        "@types/pg": "^8.16.0",
+        "dotenv": "^17.2.3",
         "fastify": "^5.7.4",
+        "pg": "^8.18.0",
+        "prisma": "^7.3.0",
         "tsx": "^4.21.0",
         "zod": "^4.3.6"
     }
