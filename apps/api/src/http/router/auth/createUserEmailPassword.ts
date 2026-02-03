@@ -8,7 +8,7 @@ import { hash } from "bcryptjs"
 export async function createUserEmailPassword(app: FastifyInstance) {
     app
         .withTypeProvider<ZodTypeProvider>()
-        .post('/session/password', {
+        .post('/user', {
             schema: {
                 tags: ["Auth"],
                 summary: "Create User with Email and password",

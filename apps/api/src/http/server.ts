@@ -10,6 +10,7 @@ import {
     ZodTypeProvider
 } from 'fastify-type-provider-zod'
 import { createUserEmailPassword } from "./router/auth/createUserEmailPassword"
+import { authUserPassword } from "./router/auth/authUserPassword"
 
 const server = fastify()
 
@@ -37,6 +38,7 @@ server.register(fastifyJwt, {
 })
 
 server.register(createUserEmailPassword)
+server.register(authUserPassword)
 
 server.listen({ port: 3332 }, (err, address) => {
     if (err) {
