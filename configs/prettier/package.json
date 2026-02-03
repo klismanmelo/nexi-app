@@ -1,0 +1,10 @@
+{
+    "name": "@nexi/prettier",
+    "version": "0.0.0",
+    "priivate": true,
+    "main": "index.mjs",
+    "dependencies": {
+        "prettier": "^3.7.4",
+        "prettier-plugin-tailwindcss": "^0.7.2"
+    }
+}
