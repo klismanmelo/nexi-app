@@ -9,6 +9,7 @@ import {
     validatorCompiler,
     ZodTypeProvider
 } from 'fastify-type-provider-zod'
+import { createUserEmailPassword } from "./router/auth/createUserEmailPassword"
 
 const server = fastify()
 
@@ -34,6 +35,8 @@ server.register(fastifySaggerUI, {
 server.register(fastifyJwt, {
     secret: 'super-secret-key',
 })
+
+server.register(createUserEmailPassword)
 
 server.listen({ port: 3332 }, (err, address) => {
     if (err) {
