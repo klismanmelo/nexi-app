@@ -13,6 +13,7 @@ import { createUserEmailPassword } from "./router/auth/createUserEmailPassword"
 import { authUserPassword } from "./router/auth/authUserPassword"
 import { getUserProfile } from "./router/auth/getUserProfile"
 import { createLink } from "./router/links/createLink"
+import { listLink } from "./router/links/listLink"
 
 const server = fastify()
 
@@ -43,6 +44,7 @@ server.register(createUserEmailPassword)
 server.register(authUserPassword)
 server.register(getUserProfile)
 server.register(createLink)
+server.register(listLink)
 
 server.listen({ port: 3332 }, (err, address) => {
     if (err) {
