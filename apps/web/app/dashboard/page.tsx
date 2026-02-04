@@ -16,5 +16,10 @@ export default async function Page() {
         redirect("/auth/signin")
     }
 
-    return <DashboardPage user={user} />
+    return (
+        <div className="min-h-screen bg-zinc-950">
+            <DashboardPage user={user} />
+        </div>
+    )
 }
+
