@@ -22,8 +22,10 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  tokens   Token[]
-  accounts Account[]
+  tokens    Token[]
+  accounts  Account[]
+  links     Link[]
+  pageViews PageView[]
 
   @@map("users")
 }
@@ -57,4 +59,80 @@ model Account {
 
   @@unique([provider, userId])
   @@map("accounts")
+}
+
+model Link {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+
+  title    String
+  url      String
+  icon     String? // nome do ícone ou url svg
+  position Int // ordem no perfil
+  isActive Boolean @default(true)
+
+  clickCount Int @default(0)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user   User        @relation(fields: [userId], references: [id])
+  clicks LinkClick[]
+
+  @@index([userId])
+  @@map("links")
+}
+
+model LinkClick {
+  id     String  @id @default(uuid())
+  linkId String  @map("link_id")
+  userId String? @map("user_id") // dono do link (facilita analytics)
+
+  ip       String?
+  referrer String?
+
+  country String?
+  city    String?
+
+  device  DeviceType
+  browser String?
+  os      String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  link Link @relation(fields: [linkId], references: [id])
+
+  @@index([linkId])
+  @@index([createdAt])
+  @@map("link_clicks")
+}
+
+model PageView {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+
+  ip       String?
+  referrer String?
+
+  country String?
+  city    String?
+
+  device  DeviceType
+  browser String?
+  os      String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("page_views")
+}
+
+enum DeviceType {
+  MOBILE
+  DESKTOP
+  TABLET
+  OTHER
 }
