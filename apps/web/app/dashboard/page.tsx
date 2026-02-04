@@ -1,23 +1,20 @@
 import { redirect } from "next/navigation"
 import { isAuthenticated } from "../auth/auth"
-import { Button } from "@/components/ui/button"
-import { signOut } from "./signout"
+import { getCurrentUser } from "./get-current-user"
+import { DashboardPage } from "./dashboard"
 
-export default async function Dashboard() {
-
+export default async function Page() {
     const auth = await isAuthenticated()
 
     if (!auth) {
         redirect("/auth/signin")
     }
-    return (
-        <div>
-            <h1>Welcome in Your Dashboard Mr. John Doen</h1>
-            <form action={signOut}>
-                <Button type="submit" variant="destructive">
-                    SignOut
-                </Button>
-            </form>
-        </div>
-    )
+
+    const { success, user } = await getCurrentUser()
+
+    if (!success || !user) {
+        redirect("/auth/signin")
+    }
+
+    return <DashboardPage user={user} />
 }
