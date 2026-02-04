@@ -1,7 +1,54 @@
-import { Globe, Users, Instagram, Send } from "lucide-react"
-import { LinkItem } from "./LinkItem"
+'use client'
 
-export default function ListLinks() {
+import { JSX, useCallback, useEffect, useState } from "react"
+import { LinkItem } from "./LinkItem"
+import { listLinkUser } from "@/http/list-links-user"
+import {
+    Globe,
+    Users,
+    Instagram,
+    Send,
+    Link as LinkIcon,
+} from "lucide-react"
+
+interface Link {
+    title: string
+    url: string
+    position: number
+    icon: string | null
+    clicks?: number
+}
+
+const iconMap: Record<string, JSX.Element> = {
+    globe: <Globe className="h-5 w-5" />,
+    users: <Users className="h-5 w-5" />,
+    instagram: <Instagram className="h-5 w-5" />,
+    send: <Send className="h-5 w-5" />,
+}
+
+export function ListLinks() {
+    const [links, setLinks] = useState<Link[]>([])
+    const [loading, setLoading] = useState(true)
+
+    const loadLinks = useCallback(async () => {
+        const data = await listLinkUser()
+        setLinks(data)
+    }, [])
+
+    useEffect(() => {
+        const load = async () => {
+            setLoading(true)
+            await loadLinks()
+            setLoading(false)
+        }
+
+        load()
+    }, [loadLinks])
+
+    if (loading) {
+        return <div className="text-zinc-400">Loading links...</div>
+    }
+
     return (
         <section className="space-y-6">
             <div className="flex items-center justify-between">
@@ -9,18 +56,25 @@ export default function ListLinks() {
                     Your Links
                 </h1>
 
-                <button
-                    className="rounded-full border border-white/10 px-4 py-2 text-sm text-white hover:border-indigo-500/40 transition"
-                >
+                <button className="rounded-full border border-white/10 px-4 py-2 text-sm text-white hover:border-indigo-500/40 transition">
                     + Add New Link
                 </button>
             </div>
 
             <div className="space-y-4">
-                <LinkItem title="Portfolio" url="https://nexi.design/alex" clicks="1.240" icon={<Globe className="h-5 w-5" />} />
-                <LinkItem title="Workshops" url="https://nexi.design/workshops" clicks="850" icon={<Users className="h-5 w-5" />} />
-                <LinkItem title="Instagram" url="https://instagram.com/alex" clicks="3.400" icon={<Instagram className="h-5 w-5" />} />
-                <LinkItem title="Contact" url="mailto:alex@nexi.design" clicks="120" icon={<Send className="h-5 w-5" />} />
+                {links.map((link) => (
+                    <LinkItem
+                        key={link.position}
+                        title={link.title}
+                        url={link.url}
+                        clicks={(link.clicks ?? 0).toString()}
+                        icon={
+                            link.icon && iconMap[link.icon]
+                                ? iconMap[link.icon]
+                                : <LinkIcon className="h-5 w-5" />
+                        }
+                    />
+                ))}
             </div>
         </section>
     )

@@ -1,10 +1,8 @@
-'use client'
-
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
 import { signOut } from "./signout"
 import { Button } from "@/components/ui/button"
 import { Eye, MousePointerClick, Percent, Share2 } from "lucide-react"
-import ListLinks from "@/components/dashboard/ListLinks"
+import { ListLinks } from "@/components/dashboard/ListLinks"
 import { StatsCard } from "@/components/dashboard/StatusCard"
 
 interface UserProfile {
