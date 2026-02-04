@@ -25,12 +25,6 @@ export function DashboardPage({ user }: DashboardPageProps) {
                 period="Last 7 Days"
             />
 
-            <form action={signOut}>
-                <Button variant="destructive" size="sm">
-                    Sign out
-                </Button>
-            </form>
-
             {/* Stats */}
             <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <StatsCard title="Total Views" total="8.4K" status="+12%" icon={<Eye className="h-5 w-5" />} />
