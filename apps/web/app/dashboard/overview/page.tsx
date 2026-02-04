@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { isAuthenticated } from "../auth/auth"
+import { isAuthenticated } from "../../auth/auth"
 import { getCurrentUser } from "./get-current-user"
 import { DashboardPage } from "./dashboard"
 

@@ -7,7 +7,7 @@ import {
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { SidebarItem } from "./SidebarItem"
-import { signOut } from "@/app/dashboard/signout"
+import { signOut } from "@/app/dashboard/overview/signout"
 import Link from "next/link"
 
 export function Sidebar() {
@@ -23,7 +23,7 @@ export function Sidebar() {
 
             {/* Navigation */}
             <nav className="flex flex-col gap-2">
-                <Link href="/dashboard">
+                <Link href="/dashboard/overview">
                     <SidebarItem
                         icon={<LayoutGrid className="h-5 w-5" />}
                         label="Overview"
