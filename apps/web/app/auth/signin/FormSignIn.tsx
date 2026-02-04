@@ -1,21 +1,9 @@
 'use client'
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    CardDescription
-} from "@/components/ui/card"
-
 import { signPasswordForm } from "./action"
 import { useState, useTransition } from "react"
 import { useRouter } from 'next/navigation'
-import { Loader2 } from "lucide-react"
+import { Loader2, Mail, Lock, Github } from "lucide-react"
 
 export function FormSignin() {
     const [error, setError] = useState<string | null>(null)
@@ -37,61 +25,108 @@ export function FormSignin() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4">
-            <Card className="w-full max-w-md">
-                <CardHeader className="space-y-1">
-                    <CardTitle className="text-2xl font-semibold text-zinc-100">
-                        Entrar
-                    </CardTitle>
-                    <CardDescription className="text-zinc-400">
-                        Acesse sua conta usando email e senha
-                    </CardDescription>
-                </CardHeader>
+        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/60 backdrop-blur-xl p-8 shadow-2xl">
+            {/* Header */}
+            <div className="text-center mb-8">
+                <h1 className="text-2xl font-semibold text-white">
+                    Welcome Back
+                </h1>
+                <p className="text-sm text-zinc-400 mt-2">
+                    Enter your credentials to access your dashboard
+                </p>
+            </div>
 
-                <CardContent>
-                    <form action={action} className="space-y-4">
-                        {/* Email */}
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                            />
-                        </div>
+            {/* Form */}
+            <form action={action} className="space-y-5">
+                {/* Email */}
+                <div className="space-y-2">
+                    <label className="text-sm text-zinc-300">Email</label>
+                    <div className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 focus-within:border-indigo-500">
+                        <Mail className="h-4 w-4 text-zinc-400" />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="alex@nexi.design"
+                            className="w-full bg-transparent text-sm text-white placeholder-zinc-500 outline-none"
+                        />
+                    </div>
+                </div>
 
-                        {/* Password */}
-                        <div className="space-y-2">
-                            <Label htmlFor="password">Senha</Label>
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                            />
-                        </div>
+                {/* Password */}
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm text-zinc-300">Password</label>
+                        <button
+                            type="button"
+                            className="text-xs text-indigo-400 hover:text-indigo-300 transition"
+                        >
+                            Forgot password?
+                        </button>
+                    </div>
 
-                        {error && (
-                            <p className="text-sm text-red-400">{error}</p>
-                        )}
+                    <div className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 focus-within:border-indigo-500">
+                        <Lock className="h-4 w-4 text-zinc-400" />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="••••••••"
+                            className="w-full bg-transparent text-sm text-white placeholder-zinc-500 outline-none"
+                        />
+                    </div>
+                </div>
 
-                        <Button type="submit" className="w-full">
-                            {isPending ? <Loader2 className="mr-2 size-4 animate-spin" /> : 'Enter'}
-                        </Button>
+                {/* Submit */}
+                {error && (
+                    <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-400">
+                        {error}
+                    </div>
+                )}
+                <button
+                    type="submit"
+                    className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-indigo-500 to-purple-500 py-3 text-sm font-medium text-white hover:opacity-90 transition"
+                >
+                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sign In →'}
+                </button>
+            </form>
 
-                        <p className="text-center text-sm text-zinc-400">
-                            Não tem uma conta?{" "}
-                            <Link
-                                href="/signup"
-                                className="underline underline-offset-4"
-                            >
-                                Criar conta
-                            </Link>
-                        </p>
-                    </form>
-                </CardContent>
-            </Card>
+            {/* Divider */}
+            <div className="my-6 flex items-center gap-3 text-xs text-zinc-500">
+                <div className="h-px w-full bg-zinc-700" />
+                OR CONTINUE WITH
+                <div className="h-px w-full bg-zinc-700" />
+            </div>
+
+            {/* Social buttons */}
+            <div className="grid grid-cols-2 gap-4">
+                <button
+                    type="button"
+                    className="flex items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950 py-2 text-sm text-white hover:bg-zinc-900 transition"
+                >
+                    <Github className="h-4 w-4" />
+                    Github
+                </button>
+
+                <button
+                    type="button"
+                    className="flex items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950 py-2 text-sm text-white hover:bg-zinc-900 transition"
+                >
+                    <span className="h-4 w-4 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold">
+                        G
+                    </span>
+                    Google
+                </button>
+            </div>
+
+            {/* Footer */}
+            <p className="mt-6 text-center text-sm text-zinc-400">
+                Don’t have an account?{" "}
+                <button
+                    type="button"
+                    className="text-indigo-400 hover:text-indigo-300 transition"
+                >
+                    Create one now
+                </button>
+            </p>
         </div>
     )
 }
