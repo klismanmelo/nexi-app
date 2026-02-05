@@ -1,3 +1,5 @@
+'use client'
+
 import {
     LayoutGrid,
     BarChart3,
@@ -9,8 +11,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { SidebarItem } from "./SidebarItem"
 import { signOut } from "@/app/dashboard/overview/signout"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+
 
 export function Sidebar() {
+    const pathname = usePathname()
     return (
         <aside className="flex h-screen w-65 flex-col border-r border-white/10 bg-zinc-950 px-4 py-6">
             {/* Logo */}
@@ -27,7 +32,7 @@ export function Sidebar() {
                     <SidebarItem
                         icon={<LayoutGrid className="h-5 w-5" />}
                         label="Overview"
-                        active
+                        active={pathname === "/dashboard/overview"}
                     />
                 </Link>
 
@@ -35,15 +40,18 @@ export function Sidebar() {
                     <SidebarItem
                         icon={<BarChart3 className="h-5 w-5" />}
                         label="Analytics"
+                        active={pathname === "/dashboard/analise"}
                     />
                 </Link>
                 <SidebarItem
                     icon={<User className="h-5 w-5" />}
                     label="Profile"
+                //active={pathname === ""}
                 />
                 <SidebarItem
                     icon={<Settings className="h-5 w-5" />}
                     label="Settings"
+                //active={pathname === ""}
                 />
             </nav>
 

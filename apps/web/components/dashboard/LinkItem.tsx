@@ -12,16 +12,7 @@ interface LinkItemProps {
 
 export function LinkItem({ title, icon, url, clicks }: LinkItemProps) {
     return (
-        <Card
-            className="
-        group grid grid-cols-[1fr_auto]
-        items-center gap-6
-        rounded-2xl border border-white/10
-        bg-zinc-900/60 backdrop-blur-xl
-        px-6 py-4 transition-all
-        hover:border-indigo-500/40
-      "
-        >
+        <Card className="group grid grid-cols-[1fr_auto] items-center gap-6 rounded-2xl border border-white/10  bg-zinc-900/60 backdrop-blur-xl 6 py-4 transition-all  hover:border-indigo-500/40" >
             {/* LEFT */}
             <div className="flex items-center gap-4">
                 <div className="opacity-0 group-hover:opacity-100 transition text-zinc-500">

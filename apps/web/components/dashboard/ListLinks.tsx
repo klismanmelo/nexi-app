@@ -10,6 +10,7 @@ import {
     Send,
     Link as LinkIcon,
 } from "lucide-react"
+import { AddLinkModal } from "./AddLinkModal"
 
 interface Link {
     title: string
@@ -36,13 +37,7 @@ export function ListLinks() {
     }, [])
 
     useEffect(() => {
-        const load = async () => {
-            setLoading(true)
-            await loadLinks()
-            setLoading(false)
-        }
-
-        load()
+        loadLinks().finally(() => setLoading(false))
     }, [loadLinks])
 
     if (loading) {
@@ -56,9 +51,7 @@ export function ListLinks() {
                     Your Links
                 </h1>
 
-                <button className="rounded-full border border-white/10 px-4 py-2 text-sm text-white hover:border-indigo-500/40 transition">
-                    + Add New Link
-                </button>
+                <AddLinkModal onLinkCreated={loadLinks} />
             </div>
 
             <div className="space-y-4">
@@ -79,3 +72,4 @@ export function ListLinks() {
         </section>
     )
 }
+
