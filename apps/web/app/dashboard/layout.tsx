@@ -1,4 +1,6 @@
 import { Sidebar } from "@/components/sidebar/Sidebar"
+import { isAuthenticated } from "../auth/auth";
+import { redirect } from "next/navigation";
 
 export default function DashboardLayout({
     children,
