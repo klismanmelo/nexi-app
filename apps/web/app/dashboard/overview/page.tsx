@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import { isAuthenticated } from "../../auth/auth"
 import { getCurrentUser } from "./get-current-user"
 import { DashboardPage } from "./dashboard"
+import { listLinkUser } from "@/http/list-links-user"
 
 export default async function Page() {
     const auth = await isAuthenticated()
@@ -16,9 +17,11 @@ export default async function Page() {
         redirect("/auth/signin")
     }
 
+    const links = await listLinkUser()
+
     return (
         <div className="min-h-screen bg-zinc-950">
-            <DashboardPage user={user} />
+            <DashboardPage user={user} links={links} />
         </div>
     )
 }

@@ -1,8 +1,6 @@
 'use client'
 
 import { JSX, useCallback, useEffect, useState } from "react"
-import { LinkItem } from "./LinkItem"
-import { listLinkUser } from "@/http/list-links-user"
 import {
     Globe,
     Users,
@@ -10,14 +8,23 @@ import {
     Send,
     Link as LinkIcon,
 } from "lucide-react"
+
+import { LinkItem } from "./LinkItem"
 import { AddLinkModal } from "./AddLinkModal"
+import { listLinkUser } from "@/http/list-links-user"
 
 interface Link {
+    id: string
     title: string
     url: string
     position: number
     icon: string | null
     clicks?: number
+}
+
+interface ListLinksProps {
+    links: Link[]
+    onLinksChange: (links: Link[]) => void
 }
 
 const iconMap: Record<string, JSX.Element> = {
@@ -27,14 +34,13 @@ const iconMap: Record<string, JSX.Element> = {
     send: <Send className="h-5 w-5" />,
 }
 
-export function ListLinks() {
-    const [links, setLinks] = useState<Link[]>([])
+export function ListLinks({ links, onLinksChange }: ListLinksProps) {
     const [loading, setLoading] = useState(true)
 
     const loadLinks = useCallback(async () => {
         const data = await listLinkUser()
-        setLinks(data)
-    }, [])
+        onLinksChange(data)
+    }, [onLinksChange])
 
     useEffect(() => {
         loadLinks().finally(() => setLoading(false))
@@ -43,6 +49,10 @@ export function ListLinks() {
     if (loading) {
         return <div className="text-zinc-400">Loading links...</div>
     }
+
+    const orderedLinks = [...links].sort(
+        (a, b) => a.position - b.position
+    )
 
     return (
         <section className="space-y-6">
@@ -55,9 +65,9 @@ export function ListLinks() {
             </div>
 
             <div className="space-y-4">
-                {links.map((link) => (
+                {orderedLinks.map(link => (
                     <LinkItem
-                        key={link.position}
+                        key={link.id}
                         title={link.title}
                         url={link.url}
                         clicks={(link.clicks ?? 0).toString()}
@@ -72,4 +82,3 @@ export function ListLinks() {
         </section>
     )
 }
-

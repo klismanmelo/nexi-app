@@ -12,6 +12,7 @@ export async function listLink(app: FastifyInstance) {
             response: {
                 200: z.array(
                     z.object({
+                        id: z.string(),
                         title: z.string(),
                         url: z.string(),
                         icon: z.string().nullable(),

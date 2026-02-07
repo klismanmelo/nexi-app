@@ -13,8 +13,18 @@ import { signOut } from "@/app/dashboard/overview/signout"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+interface UserProfile {
+    id: string
+    name: string | null
+    email: string
+    avatarUrl: string | null
+}
 
-export function Sidebar() {
+interface DashboardPageProps {
+    user: UserProfile
+}
+
+export function Sidebar({ user }: DashboardPageProps) {
     const pathname = usePathname()
     return (
         <aside className="flex h-screen w-65 flex-col border-r border-white/10 bg-zinc-950 px-4 py-6">
@@ -62,13 +72,13 @@ export function Sidebar() {
             <div className="border-t border-white/10 pt-4">
                 <div className="flex items-center gap-3 px-2 py-3">
                     <Avatar className="h-9 w-9">
-                        <AvatarImage src="" />
+                        <AvatarImage src={user.avatarUrl ?? ""} />
                         <AvatarFallback>AM</AvatarFallback>
                     </Avatar>
 
                     <div className="flex-1">
                         <p className="text-sm font-medium text-white">
-                            Alex Martins
+                            {user.name ?? "Fulano"}
                         </p>
                         <p className="text-xs text-zinc-400">
                             Pro Plan

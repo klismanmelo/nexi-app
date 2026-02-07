@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { apiClient } from "./api-client"
 
 interface ListLinkUserResponse {
+    id: string,
     title: string,
     url: string,
     position: number,
