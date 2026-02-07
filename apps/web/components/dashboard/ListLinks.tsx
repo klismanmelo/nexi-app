@@ -68,9 +68,11 @@ export function ListLinks({ links, onLinksChange }: ListLinksProps) {
                 {orderedLinks.map(link => (
                     <LinkItem
                         key={link.id}
+                        id={link.id}
                         title={link.title}
                         url={link.url}
                         clicks={(link.clicks ?? 0).toString()}
+                        onDeleted={loadLinks}
                         icon={
                             link.icon && iconMap[link.icon]
                                 ? iconMap[link.icon]

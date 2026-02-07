@@ -1,16 +1,26 @@
+'use client'
+
 import { Card } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { ReactNode } from "react"
-import { GripVertical, ExternalLink, Copy } from "lucide-react"
+import { GripVertical, ExternalLink, Copy, Trash } from "lucide-react"
+import { deleteLinkAction } from "@/app/dashboard/overview/delete"
 
 interface LinkItemProps {
+    id: string,
     title: string
     icon: ReactNode
     url: string
     clicks: string
+    onDeleted: () => void
 }
 
-export function LinkItem({ title, icon, url, clicks }: LinkItemProps) {
+export function LinkItem({ id, title, icon, url, clicks, onDeleted }: LinkItemProps) {
+
+    async function handleDelete(formData: FormData) {
+        await deleteLinkAction(formData)
+        onDeleted()
+    }
     return (
         <Card className="group grid grid-cols-[1fr_auto] items-center p-4 rounded-2xl border border-white/10  bg-zinc-900/60 backdrop-blur-xl 6 py-4 transition-all  hover:border-indigo-500/40" >
             {/* LEFT */}
@@ -41,6 +51,12 @@ export function LinkItem({ title, icon, url, clicks }: LinkItemProps) {
 
                 <div className="h-8 w-px bg-zinc-700" />
 
+                <form action={handleDelete}>
+                    <input type="hidden" name="linkId" value={id} />
+                    <button type="submit">
+                        <Trash className="opacity-0 group-hover:opacity-80 transition text-red-600" />
+                    </button>
+                </form>
                 <div className="flex items-center gap-3">
                     <button className="rounded-md p-2 text-zinc-400 hover:bg-white/5 hover:text-white transition">
                         <Copy className="h-4 w-4" />
