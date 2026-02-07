@@ -26,8 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
+      <body className={`${inter.variable} ${outfit.variable} antialiased`}>
+        <main className="min-h-screen bg-background">
+          {children}
+        </main>
       </body>
     </html>
   );

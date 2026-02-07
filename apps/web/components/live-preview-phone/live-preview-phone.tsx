@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 interface LinkItem {
     id: string
     title: string
+    isVisible: boolean
     icon?: React.ReactNode
 }
 
@@ -62,15 +63,17 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
 
                     {/* Links */}
                     <div className="mt-8 space-y-3">
-                        {links.map((link) => (
-                            <div
-                                key={link.id}
-                                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white backdrop-blur-md transition hover:bg-white/15"
-                            >
-                                <span className="opacity-80">{link.icon}</span>
-                                {link.title}
-                            </div>
-                        ))}
+                        {links
+                            .filter(link => link.isVisible)
+                            .map((link) => (
+                                <div
+                                    key={link.id}
+                                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white backdrop-blur-md transition hover:bg-white/15"
+                                >
+                                    <span className="opacity-80">{link.icon}</span>
+                                    {link.title}
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>

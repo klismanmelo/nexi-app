@@ -19,6 +19,7 @@ interface Link {
     url: string
     position: number
     icon: string | null
+    isVisible: boolean
     clicks?: number
 }
 
@@ -72,7 +73,9 @@ export function ListLinks({ links, onLinksChange }: ListLinksProps) {
                         title={link.title}
                         url={link.url}
                         clicks={(link.clicks ?? 0).toString()}
-                        onDeleted={loadLinks}
+                        onChange={loadLinks}
+                        onDelete={loadLinks}
+                        isVisible={link.isVisible}
                         icon={
                             link.icon && iconMap[link.icon]
                                 ? iconMap[link.icon]

@@ -119,7 +119,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    @apply bg-background;
+    overscroll-behavior-y: none;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen;
   }
 }

@@ -1,25 +1,12 @@
 "use server"
 
 import { deleteLinkApi } from '@/http/delete-link'
-import z from 'zod'
 
-const schemaDeleteLink = z.object({
-    linkId: z.string(),
-})
+interface DeleteLinkRequest {
+    linkId: string
+}
 
-export async function deleteLinkAction(formData: FormData) {
-    const parsed = schemaDeleteLink.safeParse(
-        Object.fromEntries(formData)
-    )
-
-    if (!parsed.success) {
-        return {
-            success: false,
-            errors: parsed.error.flatten().fieldErrors,
-        }
-    }
-
-    const { linkId } = parsed.data
+export async function deleteLinkAction({ linkId }: DeleteLinkRequest) {
 
     try {
         const response = await deleteLinkApi({

@@ -5,6 +5,8 @@ import { Switch } from "@/components/ui/switch"
 import { ReactNode } from "react"
 import { GripVertical, ExternalLink, Copy, Trash } from "lucide-react"
 import { deleteLinkAction } from "@/app/dashboard/overview/delete"
+import { updateLinkVisibleApi } from "@/http/patch-link-isVisible"
+import { Button } from "../ui/button"
 
 interface LinkItemProps {
     id: string,
@@ -12,14 +14,21 @@ interface LinkItemProps {
     icon: ReactNode
     url: string
     clicks: string
-    onDeleted: () => void
+    isVisible: boolean
+    onChange: () => void
+    onDelete: () => void
 }
 
-export function LinkItem({ id, title, icon, url, clicks, onDeleted }: LinkItemProps) {
+export function LinkItem({ id, title, icon, url, clicks, isVisible, onChange, onDelete }: LinkItemProps) {
 
-    async function handleDelete(formData: FormData) {
-        await deleteLinkAction(formData)
-        onDeleted()
+    async function handleDelete() {
+        await deleteLinkAction({ linkId: id })
+        onDelete()
+    }
+
+    async function handleCheckVisible(checked: boolean) {
+        await updateLinkVisibleApi({ linkId: id, isVisible: checked })
+        onChange()
     }
     return (
         <Card className="group grid grid-cols-[1fr_auto] items-center p-4 rounded-2xl border border-white/10  bg-zinc-900/60 backdrop-blur-xl 6 py-4 transition-all  hover:border-indigo-500/40" >
@@ -51,18 +60,20 @@ export function LinkItem({ id, title, icon, url, clicks, onDeleted }: LinkItemPr
 
                 <div className="h-8 w-px bg-zinc-700" />
 
-                <form action={handleDelete}>
-                    <input type="hidden" name="linkId" value={id} />
-                    <button type="submit">
-                        <Trash className="opacity-0 group-hover:opacity-80 transition text-red-600" />
-                    </button>
-                </form>
+                <Button type="button" onClick={() => handleDelete()}
+                >
+                    <Trash className="opacity-0 group-hover:opacity-80 transition text-red-600" />
+                </Button>
+
                 <div className="flex items-center gap-3">
                     <button className="rounded-md p-2 text-zinc-400 hover:bg-white/5 hover:text-white transition">
                         <Copy className="h-4 w-4" />
                     </button>
 
-                    <Switch />
+                    <Switch
+                        defaultChecked={isVisible}
+                        onCheckedChange={handleCheckVisible}
+                    />
                 </div>
             </div>
         </Card>

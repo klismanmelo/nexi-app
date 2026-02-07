@@ -28,6 +28,7 @@ interface Link {
     url: string
     position: number
     icon: string | null
+    isVisible: boolean
     clicks?: number
 }
 
@@ -91,6 +92,7 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
                     links={links.map(link => ({
                         id: link.id,
                         title: link.title,
+                        isVisible: link.isVisible,
                         icon: <Globe size={16} />,
                     }))}
                 />

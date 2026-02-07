@@ -65,11 +65,12 @@ model Link {
   id     String @id @default(uuid())
   userId String @map("user_id")
 
-  title    String
-  url      String
-  icon     String? // nome do ícone ou url svg
-  position Int // ordem no perfil
-  isActive Boolean @default(true)
+  title     String
+  url       String
+  icon      String? // nome do ícone ou url svg
+  position  Int // ordem no perfil
+  isActive  Boolean @default(true)
+  isVisible Boolean @default(true)
 
   clickCount Int @default(0)
 

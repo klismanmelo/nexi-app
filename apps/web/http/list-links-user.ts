@@ -8,7 +8,8 @@ interface ListLinkUserResponse {
     title: string,
     url: string,
     position: number,
-    icon: string | null
+    icon: string | null,
+    isVisible: boolean
 }
 
 export async function listLinkUser() {

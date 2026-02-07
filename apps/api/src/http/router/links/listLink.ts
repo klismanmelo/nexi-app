@@ -16,7 +16,8 @@ export async function listLink(app: FastifyInstance) {
                         title: z.string(),
                         url: z.string(),
                         icon: z.string().nullable(),
-                        position: z.number()
+                        position: z.number(),
+                        isVisible: z.boolean()
                     })
                 )
             }
