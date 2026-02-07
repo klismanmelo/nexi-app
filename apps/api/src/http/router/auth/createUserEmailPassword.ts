@@ -38,7 +38,7 @@ export async function createUserEmailPassword(app: FastifyInstance) {
 
             await prisma.user.create({
                 data: {
-                    name: username,
+                    username,
                     email,
                     passwordHash
                 }

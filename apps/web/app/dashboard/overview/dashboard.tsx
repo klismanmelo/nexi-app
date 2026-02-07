@@ -18,6 +18,8 @@ import { TrafficOverviewChart } from "@/components/dashboard/TrafficOverviewChar
 interface UserProfile {
     id: string
     name: string | null
+    username: string
+    biography: string
     email: string
     avatarUrl: string | null
 }
@@ -86,7 +88,7 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
                 <LivePreviewPhone
                     user={{
                         name: user.name ?? "Unnamed",
-                        role: "Designer & Creator",
+                        role: user.biography ?? "",
                         avatarUrl: user.avatarUrl ?? "",
                     }}
                     links={links.map(link => ({

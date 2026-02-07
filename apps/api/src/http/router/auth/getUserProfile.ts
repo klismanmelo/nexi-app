@@ -15,7 +15,9 @@ export async function getUserProfile(app: FastifyInstance) {
                         user: z.object({
                             id: z.uuid(),
                             name: z.string().nullable(),
-                            email: z.string().email(),
+                            username: z.string().nullable(),
+                            biography: z.string(),
+                            email: z.email(),
                             avatarUrl: z.string().url().nullable()
                         })
                     })
@@ -30,6 +32,8 @@ export async function getUserProfile(app: FastifyInstance) {
                 select: {
                     id: true,
                     name: true,
+                    username: true,
+                    biography: true,
                     email: true,
                     avatarUrl: true,
                 },

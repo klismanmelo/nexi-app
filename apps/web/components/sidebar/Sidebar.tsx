@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation"
 interface UserProfile {
     id: string
     name: string | null
+    username: string
     email: string
     avatarUrl: string | null
 }
@@ -78,10 +79,10 @@ export function Sidebar({ user }: DashboardPageProps) {
 
                     <div className="flex-1">
                         <p className="text-sm font-medium text-white">
-                            {user.name ?? "Fulano"}
+                            {user.username ?? "Fulano"}
                         </p>
                         <p className="text-xs text-zinc-400">
-                            Pro Plan
+                            {user.email}
                         </p>
                     </div>
                 </div>

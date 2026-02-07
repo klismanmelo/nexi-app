@@ -5,6 +5,8 @@ interface SessionPasswordResponse {
     user: {
         id: string
         name: string | null
+        username: string
+        biography: string
         email: string
         avatarUrl: string | null
     }
@@ -13,6 +15,8 @@ interface SessionPasswordResponse {
 interface UserProfile {
     id: string
     name: string | null
+    username: string
+    biography: string
     email: string
     avatarUrl: string | null
 }
