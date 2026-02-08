@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState, useTransition } from "react"
-import { createLinkAction } from "@/app/dashboard/overview/action"
+import { createLinkAction } from "@/app/dashboard/overview/actions/createLinkAction"
 import { Loader2 } from "lucide-react"
 
 interface AddLinkModalProps {

@@ -1,7 +1,7 @@
 import { isAuthenticated } from "@/app/auth/auth"
 import { CardProfile } from "@/components/profile/CardProfile"
 import { redirect } from "next/navigation"
-import { getCurrentUser } from "../overview/get-current-user"
+import { getCurrentUser } from "../overview/actions/get-current-user"
 
 export default async function ProfilePage() {
     const auth = await isAuthenticated()

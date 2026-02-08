@@ -1,13 +1,18 @@
 import { cookies } from 'next/headers'
 import { apiClient } from './api-client'
-import { UserProfileType } from '@/@types/User'
 
-interface SessionPasswordResponse {
-    user: UserProfileType
+interface DataAnalyticsCards {
+    total_views: number
+    total_visitors: number
+    total_clicks: number
+    ctr: number
 }
 
+interface AnalyticsResponse {
+    dataAnalytics: DataAnalyticsCards
+}
 
-export async function getUserProfile(): Promise<UserProfileType> {
+export async function getDataAnalyticsApi(): Promise<DataAnalyticsCards> {
     const cookieStore = await cookies()
     const token = cookieStore.get("token_nexi")?.value
 
@@ -17,18 +22,18 @@ export async function getUserProfile(): Promise<UserProfileType> {
 
     try {
         const result = await apiClient
-            .get("profile", {
+            .get("analytics-data", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .json<SessionPasswordResponse>()
+            .json<AnalyticsResponse>()
 
-        return result.user
+        return result.dataAnalytics
     } catch (error: any) {
-        console.error("❌ Erro na API:", error)
+        console.error("❌ Erro ao buscar analytics:", error)
 
-        if (error.response) {
+        if (error?.response) {
             const text = await error.response.text()
             console.error("Response body:", text)
         }

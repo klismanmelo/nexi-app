@@ -4,7 +4,7 @@ import { ReactNode } from "react"
 interface StatsCardProps {
     title: string
     icon: ReactNode
-    total: string
+    total: number
     status: string
 }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
     Eye,
     Globe,
@@ -14,15 +14,8 @@ import { ListLinks } from "@/components/dashboard/ListLinks"
 import { StatsCard } from "@/components/dashboard/StatusCard"
 import { LivePreviewPhone } from "@/components/live-preview-phone/live-preview-phone"
 import { TrafficOverviewChart } from "@/components/dashboard/TrafficOverviewChart"
-
-interface UserProfile {
-    id: string
-    name: string | null
-    username: string
-    biography: string
-    email: string
-    avatarUrl: string | null
-}
+import { getDataAnalyticsAction } from "./actions/getAnalyticsDataaCards"
+import { UserProfileType } from "@/@types/User"
 
 interface Link {
     id: string
@@ -35,12 +28,21 @@ interface Link {
 }
 
 interface DashboardPageProps {
-    user: UserProfile
+    user: UserProfileType
     links: Link[]
+}
+
+interface DataAnalyticsCards {
+    total_views: number
+    total_visitors: number
+    total_clicks: number
+    ctr: number
 }
 
 export function DashboardPage({ user, links: initialLinks }: DashboardPageProps) {
     const [links, setLinks] = useState<Link[]>(initialLinks)
+    const [loading, setLoading] = useState(true)
+    const [analytics, setAnalytics] = useState<DataAnalyticsCards | null>(null)
 
     const trafficData = [
         { label: 'Mon', visitors: 400, clicks: 220 },
@@ -51,6 +53,15 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
         { label: 'Sat', visitors: 240, clicks: 380 },
         { label: 'Sun', visitors: 320, clicks: 430 },
     ]
+
+    const loadAnalytics = useCallback(async () => {
+        const data = await getDataAnalyticsAction({ user })
+        setAnalytics(data)
+    }, [user])
+
+    useEffect(() => {
+        loadAnalytics()
+    }, [loadAnalytics])
 
     return (
         <main className="grid grid-cols-1 gap-8 p-8 xl:grid-cols-[1fr_360px]">
@@ -64,10 +75,10 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
 
                 {/* Stats */}
                 <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                    <StatsCard title="Total Views" total="8.4K" status="+12%" icon={<Eye className="h-5 w-5" />} />
-                    <StatsCard title="Total Clicks" total="4.2K" status="+8%" icon={<MousePointerClick className="h-5 w-5" />} />
-                    <StatsCard title="CTR" total="52%" status="+2.4%" icon={<Percent className="h-5 w-5" />} />
-                    <StatsCard title="Shares" total="892" status="+15%" icon={<Share2 className="h-5 w-5" />} />
+                    <StatsCard title="Total Views" total={analytics?.total_views ?? 0} status="+12%" icon={<Eye className="h-5 w-5" />} />
+                    <StatsCard title="Total Clicks" total={analytics?.total_clicks ?? 0} status="+8%" icon={<MousePointerClick className="h-5 w-5" />} />
+                    <StatsCard title="CTR" total={analytics?.ctr ?? 0} status="+2.4%" icon={<Percent className="h-5 w-5" />} />
+                    <StatsCard title="Shares" total={908} status="+15%" icon={<Share2 className="h-5 w-5" />} />
                 </section>
 
                 {/* Gráfico */}

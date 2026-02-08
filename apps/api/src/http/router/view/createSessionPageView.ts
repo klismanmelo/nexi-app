@@ -58,8 +58,9 @@ export async function createSessionPageView(app: FastifyInstance) {
                 reply.setCookie('session_id', session.id, {
                     path: '/',
                     httpOnly: true,
-                    sameSite: 'lax',
-                    maxAge: 60 * 60 * 24 // 24h
+                    sameSite: 'none',
+                    secure: true,
+                    maxAge: 60 * 60 * 24,
                 })
             }
 

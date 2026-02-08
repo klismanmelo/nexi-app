@@ -21,6 +21,8 @@ import { getLinkUserViewPage } from "./router/view/getLinkUserViewPage"
 import { updateUserPRofile } from "./router/auth/updateUserProfile"
 import { createSessionPageView } from "./router/view/createSessionPageView"
 import cookie from '@fastify/cookie'
+import { getDataAnalytics } from "./router/view/getDataAnalytics"
+import { getMe } from "./router/view/getSameUserPageView"
 
 const server = fastify()
 
@@ -29,8 +31,11 @@ server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
 
 server.register(cors, {
-    origin: 'http://localhost:3000', // ou true em dev
-    credentials: true
+    origin: [
+        'http://localhost:3000',
+        'https://nexi.arquitetor.space',
+    ],
+    credentials: true,
 })
 
 server.register(fastifySwagger, {
@@ -69,6 +74,8 @@ server.register(patchLinkVisible)
 
 server.register(getLinkUserViewPage)
 server.register(createSessionPageView)
+server.register(getDataAnalytics)
+server.register(getMe)
 
 server.listen({ port: 3332 }, (err, address) => {
     if (err) {
