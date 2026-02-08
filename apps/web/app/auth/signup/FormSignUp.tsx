@@ -1,11 +1,11 @@
 'use client'
 
-import { signPasswordForm } from "./action"
+import { signUpPasswordForm } from "./action"
 import { useState, useTransition } from "react"
 import { useRouter } from 'next/navigation'
-import { Loader2, Mail, Lock, Github } from "lucide-react"
+import { Loader2, Mail, Lock, Github, AtSign } from "lucide-react"
 
-export function FormSignin() {
+export function FormSignUp() {
     const [error, setError] = useState<string | null>(null)
     const [isPending, startTransition] = useTransition()
     const route = useRouter()
@@ -13,13 +13,13 @@ export function FormSignin() {
     async function action(formData: FormData) {
 
         startTransition(async () => {
-            const response = await signPasswordForm(formData)
+            const response = await signUpPasswordForm(formData)
             if (!response.success) {
                 setError("Email ou senha inválidos")
                 return
             }
 
-            route.replace('/dashboard')
+            route.replace('/auth/signin')
         })
 
     }
@@ -29,15 +29,28 @@ export function FormSignin() {
             {/* Header */}
             <div className="text-center mb-8">
                 <h1 className="text-2xl font-semibold text-white">
-                    Welcome Back
+                    Welcome
                 </h1>
                 <p className="text-sm text-zinc-400 mt-2">
-                    Enter your credentials to access your dashboard
+                    Enter your credentials to create account in NEXI Project
                 </p>
             </div>
 
             {/* Form */}
             <form action={action} className="space-y-5">
+                {/* Username */}
+                <div className="space-y-2">
+                    <label className="text-sm text-zinc-300">Username</label>
+                    <div className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 focus-within:border-indigo-500">
+                        <AtSign className="h-4 w-4 text-zinc-400" />
+                        <input
+                            type="username"
+                            name="username"
+                            placeholder="usernameUnique"
+                            className="w-full bg-transparent text-sm text-white placeholder-zinc-500 outline-none"
+                        />
+                    </div>
+                </div>
                 {/* Email */}
                 <div className="space-y-2">
                     <label className="text-sm text-zinc-300">Email</label>
@@ -119,12 +132,12 @@ export function FormSignin() {
 
             {/* Footer */}
             <p className="mt-6 text-center text-sm text-zinc-400">
-                Don’t have an account?{" "}
+                Do you have an account?{" "}
                 <a
-                    href="/auth/signup"
+                    href="/auth/signin"
                     className="text-indigo-400 hover:text-indigo-300 transition"
                 >
-                    Create one now
+                    SignIn one now
                 </a>
             </p>
         </div>

@@ -40,7 +40,8 @@ export async function createUserEmailPassword(app: FastifyInstance) {
                 data: {
                     username,
                     email,
-                    passwordHash
+                    passwordHash,
+                    biography: ''
                 }
             })
 
