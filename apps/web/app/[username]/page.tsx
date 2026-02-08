@@ -1,3 +1,6 @@
+import { AnalyticsTracker } from './Analytic'
+import { notFound } from 'next/navigation'
+
 interface PageProps {
     params: Promise<{
         username: string
@@ -29,12 +32,16 @@ export default async function PageView({ params }: PageProps) {
         }
     )
 
-    if (!response.ok) {
+    if (!response) {
         throw new Error('Usuário não encontrado')
     }
 
     const data: { user: UserProfile } = await response.json()
     const { user } = data
+
+    if (!user) {
+        notFound()
+    }
 
     return (
         <main className="min-h-screen bg-zinc-950 text-zinc-100 flex justify-center">
@@ -62,7 +69,7 @@ export default async function PageView({ params }: PageProps) {
                         {user.biography}
                     </p>
                 </div>
-
+                <AnalyticsTracker userId={user.id} />
                 {/* Links */}
                 <div className="mt-8 flex flex-col gap-3">
                     {user.links

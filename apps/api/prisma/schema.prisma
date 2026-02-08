@@ -17,7 +17,7 @@ model User {
   id           String   @id @default(uuid())
   name         String?
   username     String   @unique
-  biography    String   @default("")
+  biography    String
   phoneNumber  String?  @map("phone_number")
   email        String   @unique
   passwordHash String?  @map("password_hash")
@@ -64,14 +64,36 @@ model Account {
   @@map("accounts")
 }
 
+model Session {
+  id       String      @id @default(uuid())
+  userId   String      @map("user_id") // dono da página
+  ipHash   String?
+  device   DeviceType?
+  browser  String?
+  os       String?
+  referrer String?
+  country  String?
+  city     String?
+
+  createdAt DateTime  @default(now())
+  endedAt   DateTime?
+
+  pageViews PageView[]
+  clicks    LinkClick[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("sessions")
+}
+
 model Link {
   id     String @id @default(uuid())
   userId String @map("user_id")
 
   title     String
   url       String
-  icon      String? // nome do ícone ou url svg
-  position  Int // ordem no perfil
+  icon      String?
+  position  Int
   isActive  Boolean @default(true)
   isVisible Boolean @default(true)
 
@@ -88,48 +110,34 @@ model Link {
 }
 
 model LinkClick {
-  id     String  @id @default(uuid())
-  linkId String  @map("link_id")
-  userId String? @map("user_id") // dono do link (facilita analytics)
+  id        String @id @default(uuid())
+  linkId    String @map("link_id")
+  userId    String @map("user_id")
+  sessionId String @map("session_id")
 
-  ip       String?
-  referrer String?
+  createdAt DateTime @default(now())
 
-  country String?
-  city    String?
-
-  device  DeviceType
-  browser String?
-  os      String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  link Link @relation(fields: [linkId], references: [id])
+  link    Link    @relation(fields: [linkId], references: [id])
+  session Session @relation(fields: [sessionId], references: [id])
 
   @@index([linkId])
+  @@index([sessionId])
   @@index([createdAt])
   @@map("link_clicks")
 }
 
 model PageView {
-  id     String @id @default(uuid())
-  userId String @map("user_id")
+  id        String @id @default(uuid())
+  userId    String @map("user_id")
+  sessionId String @map("session_id")
 
-  ip       String?
-  referrer String?
+  createdAt DateTime @default(now())
 
-  country String?
-  city    String?
-
-  device  DeviceType
-  browser String?
-  os      String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  user User @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  session Session @relation(fields: [sessionId], references: [id])
 
   @@index([userId])
+  @@index([sessionId])
   @@index([createdAt])
   @@map("page_views")
 }
