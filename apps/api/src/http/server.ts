@@ -2,6 +2,7 @@ import { fastify } from "fastify"
 import { fastifyJwt } from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySaggerUI from '@fastify/swagger-ui'
+import cors from '@fastify/cors'
 
 import {
     jsonSchemaTransform,
@@ -18,12 +19,19 @@ import { deleteLink } from "./router/links/deleteLink"
 import { patchLinkVisible } from "./router/links/patchLinkVisible"
 import { getLinkUserViewPage } from "./router/view/getLinkUserViewPage"
 import { updateUserPRofile } from "./router/auth/updateUserProfile"
+import { createSessionPageView } from "./router/view/createSessionPageView"
+import cookie from '@fastify/cookie'
 
 const server = fastify()
 
 server.withTypeProvider<ZodTypeProvider>()
 server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
+
+server.register(cors, {
+    origin: 'http://localhost:3000', // ou true em dev
+    credentials: true
+})
 
 server.register(fastifySwagger, {
     openapi: {
@@ -44,6 +52,11 @@ server.register(fastifyJwt, {
     secret: 'super-secret-key',
 })
 
+server.register(cookie, {
+    secret: process.env.COOKIE_SECRET, // opcional
+    hook: 'onRequest'
+})
+
 server.register(createUserEmailPassword)
 server.register(authUserPassword)
 server.register(getUserProfile)
@@ -55,6 +68,7 @@ server.register(deleteLink)
 server.register(patchLinkVisible)
 
 server.register(getLinkUserViewPage)
+server.register(createSessionPageView)
 
 server.listen({ port: 3332 }, (err, address) => {
     if (err) {

@@ -9,7 +9,7 @@ export async function getLinkUserViewPage(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().get('/:username',
         {
             schema: {
-                tags: ["LiveView"],
+                tags: ["PageView"],
                 summary: "Get info User Profile",
                 params: z.object({
                     username: z.string()
