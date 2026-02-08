@@ -7,6 +7,7 @@ import { GripVertical, ExternalLink, Copy, Trash } from "lucide-react"
 import { deleteLinkAction } from "@/app/dashboard/overview/delete"
 import { updateLinkVisibleApi } from "@/http/patch-link-isVisible"
 import { Button } from "../ui/button"
+import Link from "next/link"
 
 interface LinkItemProps {
     id: string,
@@ -45,7 +46,9 @@ export function LinkItem({ id, title, icon, url, clicks, isVisible, onChange, on
                 <div>
                     <div className="flex items-center gap-2">
                         <h3 className="font-medium text-white">{title}</h3>
-                        <ExternalLink className="h-4 w-4 text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <Link href={url}>
+                            <ExternalLink className="h-4 w-4 text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
                     </div>
                     <p className="text-sm text-zinc-400">{url}</p>
                 </div>

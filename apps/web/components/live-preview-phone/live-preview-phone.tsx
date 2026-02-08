@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import { Share2, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { CopyButton } from '../buttons/CopyButtonText'
 
 interface LinkItem {
     id: string
@@ -13,7 +15,7 @@ interface LinkItem {
 
 interface LivePreviewPhoneProps {
     user: {
-        name: string
+        username: string
         role: string
         avatarUrl: string
     }
@@ -26,9 +28,9 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
             {/* Header */}
             <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-sm font-medium text-white">Live Preview</h3>
-                <button className="text-sm text-indigo-400 hover:text-indigo-300">
-                    Share
-                </button>
+                <Link href={`/${user.username}`} className="text-sm text-indigo-400 hover:text-indigo-300">
+                    {user.username}
+                </Link>
             </div>
 
             <div className="relative mx-auto rounded-[3rem] bg-black p-2 shadow-2xl">
@@ -42,7 +44,7 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
                         {user.avatarUrl ? (
                             <Image
                                 src={user.avatarUrl}
-                                alt={user.name}
+                                alt={user.username}
                                 width={80}
                                 height={80}
                                 className="rounded-full border-2 border-white/30 shadow-lg"
@@ -54,7 +56,7 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
                         )}
 
                         <h4 className="mt-4 text-lg font-semibold text-white">
-                            {user.name}
+                            @{user.username}
                         </h4>
                         <span className="text-[11px] uppercase tracking-widest text-white/60">
                             {user.role}
@@ -84,9 +86,9 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
                 <button className="rounded-full bg-white/5 p-3 text-white hover:bg-white/10">
                     <Share2 size={18} />
                 </button>
-                <Button className="w-60 rounded-full bg-indigo-500 hover:bg-indigo-600">
-                    Copy Link
-                </Button>
+
+
+                <CopyButton text={`http://localhost:3000/${user.username}`} />
 
             </div>
         </div>

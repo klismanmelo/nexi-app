@@ -46,7 +46,7 @@ export function AddLinkModal({ onLinkCreated }: AddLinkModalProps) {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             {/* Trigger */}
             <DialogTrigger asChild>
-                <button className="rounded-full border border-white/10 px-4 py-2 text-sm text-white hover:border-indigo-500/40 transition">
+                <button className="rounded-full border-2 border-dashed border-white/10 px-4 py-2 text-sm text-white hover:border-indigo-500/40 transition">
                     + Add New Link
                 </button>
             </DialogTrigger>

@@ -54,11 +54,14 @@ export function Sidebar({ user }: DashboardPageProps) {
                         active={pathname === "/dashboard/analise"}
                     />
                 </Link>
-                <SidebarItem
-                    icon={<User className="h-5 w-5" />}
-                    label="Profile"
-                //active={pathname === ""}
-                />
+                <Link href="/dashboard/profile">
+                    <SidebarItem
+                        icon={<User className="h-5 w-5" />}
+                        label="Profile"
+                        active={pathname === "/dashboard/profile"}
+                    />
+                </Link>
+
                 <SidebarItem
                     icon={<Settings className="h-5 w-5" />}
                     label="Settings"

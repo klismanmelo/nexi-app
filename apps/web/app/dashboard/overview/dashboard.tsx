@@ -87,7 +87,7 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
             <aside className="sticky top-8 h-fit">
                 <LivePreviewPhone
                     user={{
-                        name: user.name ?? "Unnamed",
+                        username: user.username ?? "Unnamed",
                         role: user.biography ?? "",
                         avatarUrl: user.avatarUrl ?? "",
                     }}

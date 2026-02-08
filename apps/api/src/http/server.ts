@@ -17,6 +17,7 @@ import { listLink } from "./router/links/listLink"
 import { deleteLink } from "./router/links/deleteLink"
 import { patchLinkVisible } from "./router/links/patchLinkVisible"
 import { getLinkUserViewPage } from "./router/view/getLinkUserViewPage"
+import { updateUserPRofile } from "./router/auth/updateUserProfile"
 
 const server = fastify()
 
@@ -46,10 +47,13 @@ server.register(fastifyJwt, {
 server.register(createUserEmailPassword)
 server.register(authUserPassword)
 server.register(getUserProfile)
+server.register(updateUserPRofile)
+
 server.register(createLink)
 server.register(listLink)
 server.register(deleteLink)
 server.register(patchLinkVisible)
+
 server.register(getLinkUserViewPage)
 
 server.listen({ port: 3332 }, (err, address) => {

@@ -17,6 +17,7 @@ export async function getUserProfile(app: FastifyInstance) {
                             name: z.string().nullable(),
                             username: z.string().nullable(),
                             biography: z.string(),
+                            phoneNumber: z.string().nullable(),
                             email: z.email(),
                             avatarUrl: z.string().url().nullable()
                         })
@@ -34,6 +35,7 @@ export async function getUserProfile(app: FastifyInstance) {
                     name: true,
                     username: true,
                     biography: true,
+                    phoneNumber: true,
                     email: true,
                     avatarUrl: true,
                 },

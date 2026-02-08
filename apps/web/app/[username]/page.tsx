@@ -23,7 +23,7 @@ export default async function PageView({ params }: PageProps) {
     const { username } = await params
 
     const response = await fetch(
-        `http://localhost:3332/${username}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${username}`,
         {
             cache: 'no-store',
         }
@@ -73,11 +73,7 @@ export default async function PageView({ params }: PageProps) {
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="
-                  w-full rounded-lg bg-zinc-900 border border-zinc-800
-                  px-4 py-3 text-center font-medium
-                  hover:bg-zinc-800 transition
-                "
+                                className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-4 py-3 text-center font-medium hover:bg-zinc-800 transition  "
                             >
                                 {link.title}
                             </a>

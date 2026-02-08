@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { apiClient } from './api-client'
+import { UserProfileType } from '@/@types/User'
 
 interface SessionPasswordResponse {
     user: {
@@ -12,17 +13,8 @@ interface SessionPasswordResponse {
     }
 }
 
-interface UserProfile {
-    id: string
-    name: string | null
-    username: string
-    biography: string
-    email: string
-    avatarUrl: string | null
-}
 
-
-export async function getUserProfile(): Promise<UserProfile> {
+export async function getUserProfile(): Promise<UserProfileType> {
     const cookieStore = await cookies()
     const token = cookieStore.get("token_nexi")?.value
 
