@@ -9,13 +9,22 @@ export function AnalyticsTracker({ userId }: { userId: string }) {
         if (hasTracked.current) return
         hasTracked.current = true
 
+        let sessionId = localStorage.getItem('session_id')
+
+        if (!sessionId) {
+            sessionId = crypto.randomUUID()
+            localStorage.setItem('session_id', sessionId)
+        }
+
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions/page-view`, {
             method: 'POST',
-            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId })
+            body: JSON.stringify({
+                userId,
+                sessionId,
+            }),
         })
     }, [userId])
 

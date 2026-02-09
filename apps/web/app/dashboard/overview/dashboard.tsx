@@ -105,6 +105,7 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
                     links={links.map(link => ({
                         id: link.id,
                         title: link.title,
+                        url: link.url,
                         isVisible: link.isVisible,
                         icon: <Globe size={16} />,
                     }))}

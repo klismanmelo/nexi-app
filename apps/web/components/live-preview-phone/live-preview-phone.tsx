@@ -9,6 +9,7 @@ import { CopyButton } from '../buttons/CopyButtonText'
 interface LinkItem {
     id: string
     title: string
+    url: string
     isVisible: boolean
     icon?: React.ReactNode
 }
@@ -68,13 +69,16 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
                         {links
                             .filter(link => link.isVisible)
                             .map((link) => (
-                                <div
-                                    key={link.id}
-                                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white backdrop-blur-md transition hover:bg-white/15"
-                                >
-                                    <span className="opacity-80">{link.icon}</span>
-                                    {link.title}
-                                </div>
+                                <a key={link.id} href={link.url} className="block">
+                                    <div
+                                        className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white backdrop-blur-md transition hover:bg-white/15"
+                                    >
+                                        <span className="flex items-center justify-center rounded-full bg-white/10 opacity-80">
+                                            {link.icon}
+                                        </span>
+                                        <span className="leading-tight">{link.title}</span>
+                                    </div>
+                                </a>
                             ))}
                     </div>
                 </div>

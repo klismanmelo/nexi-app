@@ -1,5 +1,6 @@
 import { AnalyticsTracker } from './Analytic'
 import { notFound } from 'next/navigation'
+import { TrackableLink } from './TrackbleLink'
 
 interface PageProps {
     params: Promise<{
@@ -8,6 +9,7 @@ interface PageProps {
 }
 
 interface Link {
+    id: string,
     title: string
     url: string
     icon: string
@@ -71,19 +73,19 @@ export default async function PageView({ params }: PageProps) {
                 </div>
                 <AnalyticsTracker userId={user.id} />
                 {/* Links */}
+
                 <div className="mt-8 flex flex-col gap-3">
                     {user.links
                         .filter(link => link.isVisible)
-                        .map((link, index) => (
-                            <a
-                                key={index}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-4 py-3 text-center font-medium hover:bg-zinc-800 transition  "
+                        .map((link) => (
+                            <TrackableLink
+                                key={link.id}
+                                linkId={link.id}
+                                userId={user.id}
+                                url={link.url}
                             >
                                 {link.title}
-                            </a>
+                            </TrackableLink>
                         ))}
                 </div>
 

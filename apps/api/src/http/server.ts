@@ -23,6 +23,7 @@ import { createSessionPageView } from "./router/view/createSessionPageView"
 import cookie from '@fastify/cookie'
 import { getDataAnalytics } from "./router/view/getDataAnalytics"
 import { getMe } from "./router/view/getSameUserPageView"
+import { createLinkClick } from "./router/view/createClickLink"
 
 const server = fastify()
 
@@ -75,6 +76,7 @@ server.register(patchLinkVisible)
 server.register(getLinkUserViewPage)
 server.register(createSessionPageView)
 server.register(getDataAnalytics)
+server.register(createLinkClick)
 server.register(getMe)
 
 server.listen({ port: 3332 }, (err, address) => {

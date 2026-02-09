@@ -23,6 +23,7 @@ export async function getLinkUserViewPage(app: FastifyInstance) {
                             biography: z.string(),
                             links: z.array(
                                 z.object({
+                                    id: z.uuid(),
                                     title: z.string(),
                                     url: z.string(),
                                     icon: z.string(),
@@ -74,6 +75,7 @@ export async function getLinkUserViewPage(app: FastifyInstance) {
                     biography: user.biography,
                     avatarUrl: user.avatarUrl,
                     links: listLinks.map(link => ({
+                        id: link.id,
                         title: link.title,
                         url: link.url,
                         icon: link.icon ?? '',
