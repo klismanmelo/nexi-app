@@ -1,6 +1,9 @@
 import { AnalyticsTracker } from './Analytic'
 import { notFound } from 'next/navigation'
 import { TrackableLink } from './TrackbleLink'
+import { shareProfile } from '@/components/buttons/SharePage'
+import { Share2 } from 'lucide-react'
+import { ButtonShareLink } from './ShareLink'
 
 interface PageProps {
     params: Promise<{
@@ -63,9 +66,12 @@ export default async function PageView({ params }: PageProps) {
                         </div>
                     )}
 
-                    <h1 className="text-xl font-semibold">
-                        @{user.username}
-                    </h1>
+                    <div className='flex items-center gap-2'>
+                        <h1 className="text-3xl font-semibold">
+                            @{user.username}
+                        </h1>
+                        <ButtonShareLink username={user.username} userId={user.id} type='LINK' />
+                    </div>
 
                     <p className="text-sm text-zinc-400 text-center">
                         {user.biography}

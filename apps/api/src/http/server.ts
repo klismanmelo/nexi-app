@@ -24,6 +24,8 @@ import cookie from '@fastify/cookie'
 import { getDataAnalytics } from "./router/view/getDataAnalytics"
 import { getMe } from "./router/view/getSameUserPageView"
 import { createLinkClick } from "./router/view/createClickLink"
+import { createShare } from "./router/share/createShare"
+import { getShare } from "./router/share/getShare"
 
 const server = fastify()
 
@@ -78,6 +80,9 @@ server.register(createSessionPageView)
 server.register(getDataAnalytics)
 server.register(createLinkClick)
 server.register(getMe)
+
+server.register(createShare)
+server.register(getShare)
 
 server.listen({ port: 3332 }, (err, address) => {
     if (err) {

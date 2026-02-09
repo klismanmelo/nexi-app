@@ -29,6 +29,7 @@ model User {
   accounts  Account[]
   links     Link[]
   pageViews PageView[]
+  shares    Share[]
 
   @@map("users")
 }
@@ -140,6 +141,25 @@ model PageView {
   @@index([sessionId])
   @@index([createdAt])
   @@map("page_views")
+}
+
+model Share {
+  id        String  @id @default(uuid())
+  userId    String
+  sessionId String?
+
+  type      ShareType
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+enum ShareType {
+  PROFILE
+  LINK
 }
 
 enum DeviceType {

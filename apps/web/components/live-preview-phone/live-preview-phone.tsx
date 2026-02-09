@@ -5,6 +5,7 @@ import { Share2, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { CopyButton } from '../buttons/CopyButtonText'
+import { shareProfile } from '../buttons/SharePage'
 
 interface LinkItem {
     id: string
@@ -16,6 +17,7 @@ interface LinkItem {
 
 interface LivePreviewPhoneProps {
     user: {
+        id: string
         username: string
         role: string
         avatarUrl: string
@@ -87,7 +89,16 @@ export function LivePreviewPhone({ user, links }: LivePreviewPhoneProps) {
 
             {/* Footer Action */}
             <div className="mt-6 flex items-center gap-3">
-                <button className="rounded-full bg-white/5 p-3 text-white hover:bg-white/10">
+                <button
+                    onClick={() =>
+                        shareProfile({
+                            username: user.username!,
+                            userId: user.id,
+                            type: "PROFILE"
+                        })
+                    }
+                    className="rounded-full bg-white/5 p-3 text-white hover:bg-white/10"
+                >
                     <Share2 size={18} />
                 </button>
 

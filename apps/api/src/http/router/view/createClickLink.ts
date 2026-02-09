@@ -13,11 +13,11 @@ export async function createLinkClick(app: FastifyInstance) {
                 schema: {
                     tags: ['LinkClick'],
                     params: z.object({
-                        linkId: z.string().uuid(),
+                        linkId: z.uuid(),
                     }),
                     body: z.object({
-                        userId: z.string().uuid(),
-                        sessionId: z.string().uuid(),
+                        userId: z.uuid(),
+                        sessionId: z.uuid(),
                     }),
                 },
             },

@@ -16,6 +16,7 @@ import { LivePreviewPhone } from "@/components/live-preview-phone/live-preview-p
 import { TrafficOverviewChart } from "@/components/dashboard/TrafficOverviewChart"
 import { getDataAnalyticsAction } from "./actions/getAnalyticsDataaCards"
 import { UserProfileType } from "@/@types/User"
+import { getDataShare } from "./actions/get-share"
 
 interface Link {
     id: string
@@ -39,10 +40,20 @@ interface DataAnalyticsCards {
     ctr: number
 }
 
+interface DataShare {
+    share_link: number
+    share_profile: number
+}
+
+interface ShareResponse {
+    dataShare: DataShare
+}
+
 export function DashboardPage({ user, links: initialLinks }: DashboardPageProps) {
     const [links, setLinks] = useState<Link[]>(initialLinks)
     const [loading, setLoading] = useState(true)
     const [analytics, setAnalytics] = useState<DataAnalyticsCards | null>(null)
+    const [share, setShare] = useState<ShareResponse | null>(null)
 
     const trafficData = [
         { label: 'Mon', visitors: 400, clicks: 220 },
@@ -59,9 +70,19 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
         setAnalytics(data)
     }, [user])
 
+    const loadShare = useCallback(async () => {
+        const data = await getDataShare({ user })
+        setShare(data)
+    }, [user])
+
+    const totalVisits =
+        (share?.dataShare.share_link ?? 0) +
+        (share?.dataShare.share_profile ?? 0)
+
     useEffect(() => {
-        loadAnalytics()
-    }, [loadAnalytics])
+        loadAnalytics(),
+            loadShare()
+    }, [loadAnalytics, loadShare])
 
     return (
         <main className="grid grid-cols-1 gap-8 p-8 xl:grid-cols-[1fr_360px]">
@@ -78,7 +99,7 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
                     <StatsCard title="Total Views" total={analytics?.total_views ?? 0} status="+12%" icon={<Eye className="h-5 w-5" />} />
                     <StatsCard title="Total Clicks" total={analytics?.total_clicks ?? 0} status="+8%" icon={<MousePointerClick className="h-5 w-5" />} />
                     <StatsCard title="CTR" total={analytics?.ctr ?? 0} status="+2.4%" icon={<Percent className="h-5 w-5" />} />
-                    <StatsCard title="Shares" total={908} status="+15%" icon={<Share2 className="h-5 w-5" />} />
+                    <StatsCard title="Shares" total={totalVisits} status="+15%" icon={<Share2 className="h-5 w-5" />} />
                 </section>
 
                 {/* Gráfico */}
@@ -98,6 +119,7 @@ export function DashboardPage({ user, links: initialLinks }: DashboardPageProps)
             <aside className="sticky top-8 h-fit">
                 <LivePreviewPhone
                     user={{
+                        id: user.id ?? "",
                         username: user.username ?? "Unnamed",
                         role: user.biography ?? "",
                         avatarUrl: user.avatarUrl ?? "",
